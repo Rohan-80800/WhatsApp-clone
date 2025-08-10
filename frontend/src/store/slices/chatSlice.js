@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { axiosInstance } from '../../lib/axios';
 
 export const fetchContacts = createAsyncThunk('chat/fetchContacts', async (_, { getState }) => {
   const { token } = getState().auth;
-  const response = await axios.get('http://localhost:5000/api/auth/users', {
+  const response = await axiosInstance.get('/auth/users', {
     headers: { Authorization: `Bearer ${token}` },
   });
   console.log("fetchContacts response:", response.data);
@@ -12,7 +12,7 @@ export const fetchContacts = createAsyncThunk('chat/fetchContacts', async (_, { 
 
 export const fetchMessages = createAsyncThunk('chat/fetchMessages', async (_, { getState }) => {
   const { token } = getState().auth;
-  const response = await axios.get('http://localhost:5000/api/messages', {
+  const response = await axiosInstance.get('/messages', {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -20,7 +20,7 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async (_, { 
 
 export const sendReaction = createAsyncThunk('chat/sendReaction', async ({ messageId, emoji }, { getState }) => {
   const { token } = getState().auth;
-  const response = await axios.post('http://localhost:5000/api/messages/react', { messageId, emoji, userId: getState().auth.user.id }, {
+  const response = await axiosInstance.post('/messages/react', { messageId, emoji, userId: getState().auth.user.id }, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return { messageId, emoji, userId: getState().auth.user.id };

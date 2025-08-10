@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/slices/authSlice";
-import axios from "axios";
+import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-hot-toast";
 
 const Login = ({ onToggleAuth }) => {
@@ -17,8 +17,8 @@ const Login = ({ onToggleAuth }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+      const response = await axiosInstance.post(
+        "/auth/login",
         {
           phone: formData.phone,
           password: formData.password

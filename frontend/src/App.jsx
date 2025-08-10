@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { restoreAuth, logout } from "./store/slices/authSlice";
-import axios from "axios";
+import { axiosInstance } from "./lib/axios";
 import { Toaster } from "react-hot-toast";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { store } from "./store/store";
@@ -26,7 +26,7 @@ const AuthWrapper = () => {
     const validateToken = async () => {
       try {
         if (token) {
-          await axios.get("http://localhost:5000/api/auth/verify", {
+          await axiosInstance.get("/auth/verify", {
             headers: { Authorization: `Bearer ${token}` }
           });
           dispatch(restoreAuth());

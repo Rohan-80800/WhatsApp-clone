@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerSuccess } from "../../store/slices/authSlice";
-import axios from "axios";
+import { axiosInstance } from "../../lib/axios";
 import { toast } from "react-hot-toast";
 
 const Signup = ({ onToggleAuth }) => {
@@ -35,8 +35,8 @@ const Signup = ({ onToggleAuth }) => {
         formDataToSend.append("profilePicture", formData.profilePicture);
       }
 
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+      const response = await axiosInstance.post(
+        "/auth/register",
         formDataToSend,
         {
           headers: { "Content-Type": "multipart/form-data" }

@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import { toast } from "react-hot-toast";
 import { format, formatDistanceToNow } from "date-fns";
 import { generateAvatar } from "../../utils/avatarUtils";
-import axios from "axios";
+import { axiosInstance } from "../../lib/axios";
 import EmojiPicker from "emoji-picker-react";
 import { useIsMobile } from "../../utils/useIsMobile";
 
@@ -49,8 +49,8 @@ const ChatArea = () => {
           status: "delivered",
           chatId: msg.chatId
         });
-        axios.post(
-          "http://localhost:5000/api/messages/status",
+        axiosInstance.post(
+          "/messages/status",
           { messageId: msg.id, status: "delivered", chatId: msg.chatId },
           {
             headers: {
@@ -120,8 +120,8 @@ const ChatArea = () => {
           status: "read",
           chatId
         });
-        axios.post(
-          "http://localhost:5000/api/messages/status",
+        axiosInstance.post(
+          "/messages/status",
           { messageId: msg.id, status: "read", chatId },
           {
             headers: {
